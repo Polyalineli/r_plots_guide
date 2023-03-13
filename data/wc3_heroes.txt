@@ -1,0 +1,72 @@
+Unit	Race	Gold	Wood	Pop	HP	Armor Type	Armor	Sight	Speed	Time	Ground Attack	Damage	Cooldown	DPS	Range	Air Attack	Damage	Cooldown	DPS	Range
+Peasant	Human	75	0	1	220	Medium	0	80	190	15	Normal	5.50	2.00	2.75	0	-	-	-	-	-
+Militia	Human	-	-	1	220	Heavy	4	140	270	-	Normal	12.50	1.20	10.42	0	-	-	-	-	-
+Footman	Human	135	0	2	420	Heavy	2	140	270	20	Normal	12.50	1.35	9.26	0	-	-	-	-	-
+Rifleman	Human	205	30	3	535	Medium	0	140	270	26	Pierce	21.00	1.50	14.00	40	Pierce	21.00	1.50	14.00	60
+Knight	Human	245	60	4	835	Heavy	5	140	350	45	Normal	34.00	1.40	24.29	0	-	-	-	-	-
+Priest	Human	135	10	2	290	Unarmored	0	140	270	28	Magic	8.50	2.00	4.25	60	Magic	8.50	2.00	4.25	60
+Sorceress	Human	155	20	2	325	Unarmored	0	140	270	30	Magic	11.00	1.75	6.29	60	Magic	11.00	1.75	6.29	60
+Spell Breaker	Human	215	30	3	600	Medium	3	140	300	28	Normal	14.00	1.90	7.37	25	-	-	-	-	-
+Flying Machine	Human	90	30	1	200	Heavy	2	180	400	13	Siege	7.50	2.50	3.00	0	Pierce	14.50	2.00	7.25	50
+Mortar Team	Human	180	70	3	360	Heavy	0	140	270	40	Siege	58.00	3.50	16.57	115	-	-	-	-	-
+Siege Engine	Human	195	60	3	700	Fort	2	140	220	55	Siege	50.00	2.10	23.81	19	Siege	13.50	2.10	6.43	50
+Gryphon Rider	Human	280	70	4	825	Light	0	160	320	45	Magic	50.00	2.20	22.73	45	Magic	50.00	2.40	20.83	45
+Dragonhawk Rider	Human	200	30	3	575	Light	1	140	350	28	Pierce	19.00	1.75	10.86	30	Pierce	19.00	1.75	10.86	30
+Water Elemental 1	Human	-	-	-	525	Heavy	0	120	220	-	Pierce	20.00	1.50	13.33	30	Pierce	20.00	1.50	13.33	30
+Water Elemental 2	Human	-	-	-	675	Heavy	1	120	220	-	Pierce	35.00	1.50	23.33	30	Pierce	35.00	1.50	23.33	30
+Water Elemental 3	Human	-	-	-	900	Heavy	2	120	220	-	Pierce	45.00	1.50	30.00	30	Pierce	45.00	1.50	30.00	30
+Phoenix	Human	-	-	-	1250	Light	1	160	320	-	Magic	68.00	1.40	48.57	60	Magic	68.00	1.40	48.57	60
+Peon	Orc	75	0	1	250	Medium	0	80	190	15	Normal	7.50	3.00	2.50	0	-	-	-	-	-
+Grunt	Orc	200	0	3	700	Heavy	1	140	270	30	Normal	19.50	1.60	12.19	0	-	-	-	-	-
+T. Headhunter	Orc	135	20	2	350	Medium	0	140	270	20	Pierce	25.00	2.31	10.82	45	Pierce	25.00	2.31	10.82	45
+T. Berserker	Orc	135	20	2	450	Medium	0	140	270	22	Pierce	25.00	2.31	10.82	45	Pierce	25.00	2.31	10.82	45
+Demolisher	Orc	220	50	4	425	Heavy	2	140	220	40	Siege	80.50	4.50	17.89	115	-	-	-	-	-
+Raider	Orc	180	40	3	610	Medium	1	140	350	28	Siege	25.00	1.85	13.51	0	-	-	-	-	-
+Tauren	Orc	280	80	5	1300	Heavy	3	140	270	44	Normal	33.00	1.90	17.37	0	-	-	-	-	-
+Shaman	Orc	130	20	2	335	Unarmored	0	140	270	30	Magic	8.50	2.10	4.05	60	Magic	8.50	2.10	4.05	60
+Witch Doctor	Orc	145	25	2	315	Unarmored	0	140	270	30	Magic	12.00	1.75	6.86	60	Magic	12.00	1.75	6.86	60
+Spirit Walker	Orc	195	35	3	500	Unarmored	0	140	270	38	Magic	19.50	1.75	11.14	40	Magic	19.50	1.75	11.14	40
+Kodo Beast	Orc	255	60	4	1000	Unarmored	1	140	220	30	Pierce	18.00	1.44	12.50	50	Pierce	18.00	1.44	12.50	50
+Wind Rider	Orc	265	40	4	570	Light	0	160	320	35	Pierce	40.00	2.00	20.00	45	Pierce	40.00	2.00	20.00	45
+Troll Batrider	Orc	160	40	2	325	Light	0	140	320	28	Siege	14.00	1.80	7.78	30	-	-	-	-	-
+Spirit Wolf	Orc	-	-	-	200	Heavy	0	120	320	-	Normal	11.50	1.00	11.50	0	-	-	-	-	-
+Dire Wolf	Orc	-	-	-	300	Heavy	0	120	350	-	Normal	16.50	1.00	16.50	0	-	-	-	-	-
+Shadow Wolf	Orc	-	-	-	500	Heavy	0	120	350	-	Normal	21.50	1.00	21.50	0	-	-	-	-	-
+Serpent Ward	Orc	-	-	-	75	Heavy	0	120	-	-	Pierce	12.00	1.50	8.00	60	Pierce	12.00	1.50	8.00	60
+Wisp	N.Elf	60	0	1	120	Medium	0	100	270	14	-	-	-	-	-	-	-	-	-	-
+Archer	N.Elf	130	10	2	245	Medium	0	140	270	20	Pierce	17.00	1.50	11.33	50	Pierce	17.00	1.50	11.33	50
+Huntress	N.Elf	195	20	3	600	Unarmored	2	140	350	30	Normal	17.00	1.80	9.44	22	-	-	-	-	-
+Glaive Thrower	N.Elf	210	65	3	300	Heavy	2	140	220	48	Siege	44.50	3.50	12.71	115	-	-	-	-	-
+Dryad	N.Elf	145	60	3	435	Unarmored	0	140	350	30	Pierce	18.00	2.00	9.00	50	Pierce	18.00	2.00	9.00	50
+DoC Druid Form	N.Elf	255	80	4	130	Heavy	1	140	270	35	Normal	20.50	1.50	13.67	0	-	-	-	-	-
+DoC Bear Form	N.Elf	-	-	4	960	Heavy	3	140	270	-	Normal	36.50	1.50	24.33	0	-	-	-	-	-
+Mountain Giant	N.Elf	425	100	7	1600	Medium	4	120	270	45	Normal	34.00	2.50	13.60	0	-	-	-	-	-
+Mountain Giant 2	N.Elf	425	100	7	1600	Medium	10	120	270	45	Siege	41.00	2.50	16.40	25	-	-	-	-	-
+Hippogryph	N.Elf	160	20	2	525	Unarmored	0	160	400	40	-	-	-	-	-	Normal	53.50	1.05	50.95	0
+DoT Druid Form	N.Elf	135	20	2	300	Unarmored	0	140	270	22	Magic	12.00	1.60	7.50	60	Magic	12.00	1.60	7.50	60
+DoT Crow Form	N.Elf	-	-	2	300	Unarmored	0	160	320	-	Magic	-	1.75	-	60	Magic	38.00	1.75	21.71	60
+Faerie Dragon	N.Elf	155	25	2	450	Light	0	160	350	25	Pierce	15.00	1.75	8.57	30	Pierce	15.00	1.75	8.57	30
+Hippogryph Rider	N.Elf	-	-	4	765	Light	1	160	350	-	Pierce	17.00	1.10	15.45	40	Pierce	17.00	1.10	15.45	10
+Chimaera	N.Elf	330	70	5	1000	Light	2	160	250	65	Magic	75.00	2.50	30.00	45	-	-	-	-	-
+Chimaera 2	N.Elf	330	70	5	1000	Light	2	160	250	65	Siege	50.00	2.50	20.00	85	-	-	-	-	-
+Treant	N.Elf	-	-	-	300	Heavy	0	120	220	-	Normal	16.00	1.75	9.14	0	-	-	-	-	-
+Avatar of Vengeance	N.Elf	-	-	-	1200	Heavy	2	120	320	-	Normal	30.50	1.35	22.59	45	Normal	30.50	1.35	22.59	45
+Spirit of Vengeance	N.Elf	-	-	-	500	Invulnerable	-	120	270	-	Pierce	16.00	1.35	11.85	45	Pierce	16.00	1.35	11.85	45
+Acolyte	Undead	75	0	1	220	Medium	0	80	220	15	Normal	9.50	2.50	3.80	0	-	-	-	-	-
+Ghoul	Undead	120	0	2	340	Heavy	0	140	270	18	Normal	13.00	1.30	10.00	0	-	-	-	-	-
+Crypt Fiend	Undead	215	40	3	550	Medium	0	140	270	30	Pierce	28.50	2.00	14.25	55	-	-	-	-	-
+Gargoyle	Undead	185	30	2	410	Unarmored	3	160	350	35	Pierce	19.50	2.20	8.86	30	Normal	65.50	1.40	46.79	0
+Abomination	Undead	240	70	4	1175	Heavy	2	140	270	40	Normal	36.00	1.90	18.95	0	-	-	-	-	-
+Meat Wagon	Undead	230	50	4	380	Heavy	2	140	220	45	Siege	79.50	4.00	19.88	115	-	-	-	-	-
+Necromancer	Undead	145	20	2	305	Unarmored	0	140	270	24	Magic	8.50	1.80	4.72	60	Magic	8.50	1.80	4.72	60
+Banshee	Undead	155	30	2	285	Unarmored	0	140	270	28	Magic	11.00	1.50	7.33	60	Magic	11.00	1.50	7.33	60
+Frost Wyrm	Undead	385	120	7	1350	Light	1	160	270	65	Magic	104.00	3.00	34.67	30	Magic	89.00	3.00	29.67	30
+Shade	Undead	-	-	1	125	Medium	0	190	350	15	-	-	-	-	-	-	-	-	-	-
+Skeleton Warrior	Undead	-	-	0	180	Heavy	1	80	270	-	Normal	14.50	2.00	7.25	0	-	-	-	-	-
+Skeletal Mage	Undead	-	-	0	230	Medium	0	140	270	-	Pierce	11.50	1.50	7.67	50	Pierce	11.50	1.50	7.67	50
+Infernal	Undead	-	-	-	1500	Heavy	6	140	320	-	Chaos	54.50	1.35	40.37	0	-	-	-	-	-
+Carrion Beetle 1	Undead	-	-	0	140	Heavy	2	120	270	-	Normal	8.50	1.50	5.67	0	-	-	-	-	-
+Carrion Beetle 2	Undead	-	-	0	275	Heavy	2	120	270	-	Normal	16.50	1.50	11.00	0	-	-	-	-	-
+Carrion Beetle 3	Undead	-	-	0	410	Heavy	2	120	270	-	Normal	24.50	1.50	16.33	0	-	-	-	-	-
+Obsidian Statue	Undead	200	35	3	550	Heavy	4	120	270	45	Magic	7.50	2.10	3.57	57.5	Magic	7.50	2.10	3.57	57.5
+Destroyer	Undead	-	-	5	900	Light	3	140	320	-	Magic	20.00	1.35	14.81	45	Magic	20.00	1.35	14.81	45

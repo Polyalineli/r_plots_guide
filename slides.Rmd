@@ -1,52 +1,138 @@
 ---
-title: "Presentation Ninja"
-subtitle: "⚔<br/>with xaringan"
-author: "Yihui Xie"
-institute: "RStudio, PBC"
-date: "2016/12/12 (updated: `r Sys.Date()`)"
+title: "Визуализация данных в R"
+subtitle: "base r, ggplot2, plotly etc.."
+author: "Полина и Лена"
+date: "2023/03/23 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
+    yolo: FALSE
     lib_dir: libs
+    css: ["default", "metropolis", "metropolis-fonts"]
     nature:
+      ratio: 16:9
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
-
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
+class: fullscreen, top, center
+background-image: url("img/graphs.png")
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+
 ```
-
-???
-
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
-
 ---
-class: center, middle
-
-# xaringan
-
-### /ʃaː.'riŋ.ɡan/
-
+примеры плохих графиков по классике
 ---
-class: inverse, center, middle
-
-# Get Started
-
+примеры хороших графиков
 ---
+layout: true
+# base r plots
+.left-column[
+### boxplot()
+```r
+boxplot(extra ~ group, data = sleep)
+```
+### stripchart()
+### barplot()
+### plot()
+### hist()
+### density()
+### qqPlot() 
 
-# Hello World
+]
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+.right-plot[
+sleep датасет
+
+```{r sleep_baser, echo=FALSE, out.width="40%"}
+boxplot(extra ~ group, data = sleep)
+```
+]
+---
+layout: false
+# ggplot2
+[ggplot2 tutorial](https://ggplot2.tidyverse.org):
 
 ```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
+install.packages("ggplot2")
+```
+---
+layout: false
+# ggplot2
+### структура
+aes()
+ - fill color group
+ 
+geoms_() 
+ - bar, point, hist, line, density
+ - position stack identity (пример на geom_bar)
+ - position_jitterdodge (пример на geom_point)
+
+### синтаксис
+ +
+ библиотека для упрощения суммирования плотов + &
+ [patchwork](https://patchwork.data-imaginist.com/)
+---
+# ggplot2
+### параметры
+ - ggtitle
+ - x y axis - настройка шкал
+ - color palettes, alpha
+ - legends
+ - themes
+### трансформация данных
+ - group_by
+ - pivot_longer pivot_wider
+ - factor
+ - stat_summarise()
+ 
+---
+layout: false
+# plot_ly()
+[plotly](https://plotly.com/r/getting-started/):
+
+```{r eval=FALSE, tidy=FALSE}
+install.packages("plotly")
 ```
 
---
+---
+layout: false
+# ComplexHeatmap
+[ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/):
 
+```{r eval=FALSE, tidy=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ComplexHeatmap")
+```
+---
+layout: false
+# ggvenn
+[ggvenn](https://github.com/yanlinlin82/ggvenn):
+
+```{r eval=FALSE, tidy=FALSE}
+install.packages("ggvenn")
+```
+---
+layout: false
+# UpSetR: 
+### A More Scalable Alternative to Venn and Euler Diagrams for Visualizing Intersecting Sets
+
+[UpSetR](https://github.com/hms-dbmi/UpSetR):
+
+```{r eval=FALSE, tidy=FALSE}
+install.packages("UpSetR")
+```
+---
+layout: false
+ссылки для саморазвития
+---
+
+---
 You are recommended to use the [RStudio IDE](https://www.rstudio.com/products/rstudio/), but you do not have to.
 
 - Create a new R Markdown document from the menu `File -> New File -> R Markdown -> From Template -> Ninja Presentation`;<sup>1</sup>

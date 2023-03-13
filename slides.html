@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Presentation Ninja</title>
+    <title>Визуализация данных в R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Yihui Xie" />
+    <meta name="author" content="Полина и Лена" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
     <script src="libs/jquery/jquery-3.6.0.min.js"></script>
     <link href="libs/leaflet/leaflet.css" rel="stylesheet" />
@@ -29,57 +30,137 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Presentation Ninja
+# Визуализация данных в R
 ]
 .subtitle[
-## ⚔<br/>with xaringan
+## base r, ggplot2, plotly etc..
 ]
 .author[
-### Yihui Xie
-]
-.institute[
-### RStudio, PBC
+### Полина и Лена
 ]
 .date[
-### 2016/12/12 (updated: 2023-03-13)
+### 2023/03/23 (updated: 2023-03-14)
 ]
 
 ---
 
+class: fullscreen, top, center
+background-image: url("img/graphs.png")
 
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
-
-
-
-???
-
-Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
 
 ---
-class: center, middle
-
-# xaringan
-
-### /ʃaː.'riŋ.ɡan/
-
+примеры плохих графиков по классике
 ---
-class: inverse, center, middle
-
-# Get Started
-
+примеры хороших графиков
 ---
+layout: true
+# base r plots
+.left-column[
+### boxplot()
+```r
+boxplot(extra ~ group, data = sleep)
+```
+### stripchart()
+### barplot()
+### plot()
+### hist()
+### density()
+### qqPlot() 
 
-# Hello World
+]
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+.right-plot[
+sleep датасет
+
+&lt;img src="slides_files/figure-html/sleep_baser-1.png" width="40%" /&gt;
+]
+---
+layout: false
+# ggplot2
+[ggplot2 tutorial](https://ggplot2.tidyverse.org):
 
 
 ```r
-remotes::install_github("yihui/xaringan")
+install.packages("ggplot2")
+```
+---
+layout: false
+# ggplot2
+### структура
+aes()
+ - fill color group
+ 
+geoms_() 
+ - bar, point, hist, line, density
+ - position stack identity (пример на geom_bar)
+ - position_jitterdodge (пример на geom_point)
+
+### синтаксис
+ +
+ библиотека для упрощения суммирования плотов + &amp;
+ [patchwork](https://patchwork.data-imaginist.com/)
+---
+# ggplot2
+### параметры
+ - ggtitle
+ - x y axis - настройка шкал
+ - color palettes, alpha
+ - legends
+ - themes
+### трансформация данных
+ - group_by
+ - pivot_longer pivot_wider
+ - factor
+ - stat_summarise()
+ 
+---
+layout: false
+# plot_ly()
+[plotly](https://plotly.com/r/getting-started/):
+
+
+```r
+install.packages("plotly")
 ```
 
---
+---
+layout: false
+# ComplexHeatmap
+[ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/):
 
+
+```r
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ComplexHeatmap")
+```
+---
+layout: false
+# ggvenn
+[ggvenn](https://github.com/yanlinlin82/ggvenn):
+
+
+```r
+install.packages("ggvenn")
+```
+---
+layout: false
+# UpSetR: 
+### A More Scalable Alternative to Venn and Euler Diagrams for Visualizing Intersecting Sets
+
+[UpSetR](https://github.com/hms-dbmi/UpSetR):
+
+
+```r
+install.packages("UpSetR")
+```
+---
+layout: false
+ссылки для саморазвития
+---
+
+---
 You are recommended to use the [RStudio IDE](https://www.rstudio.com/products/rstudio/), but you do not have to.
 
 - Create a new R Markdown document from the menu `File -&gt; New File -&gt; R Markdown -&gt; From Template -&gt; Ninja Presentation`;&lt;sup&gt;1&lt;/sup&gt;
@@ -346,8 +427,8 @@ library(leaflet)
 leaflet() %&gt;% addTiles() %&gt;% setView(-93.65, 42.0285, zoom = 17)
 ```
 
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-91d01f726a2ede59fe11" style="width:100%;height:432px;"></div>
-<script type="application/json" data-for="htmlwidget-91d01f726a2ede59fe11">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[42.0285,-93.65],17,[]]},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c948084773100aa25f72" style="width:100%;height:432px;"></div>
+<script type="application/json" data-for="htmlwidget-c948084773100aa25f72">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[42.0285,-93.65],17,[]]},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -359,8 +440,8 @@ DT::datatable(
 )
 ```
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-bbffb10868dada7197ca" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bbffb10868dada7197ca">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6bc296fb88bbfff76470" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6bc296fb88bbfff76470">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -785,6 +866,7 @@ The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](https://yih
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
+"ratio": "16:9",
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false
