@@ -28,13 +28,9 @@ options(htmltools.dir.version = FALSE)
 ---
 примеры хороших графиков
 ---
-layout: true
 # base r plots
-.left-column[
 ### boxplot()
-```r
-boxplot(extra ~ group, data = sleep)
-```
+
 ### stripchart()
 ### barplot()
 ### plot()
@@ -42,16 +38,24 @@ boxplot(extra ~ group, data = sleep)
 ### density()
 ### qqPlot() 
 
+---
+
+# base r plots
+.left-column[
+boxplot()
+```r
+boxplot(extra ~ group, data = sleep)
+```
 ]
 
 .right-plot[
-sleep датасет
-
-```{r sleep_baser, echo=FALSE, out.width="40%"}
+### sleep датасет
+```{r, echo=FALSE, out.width="40%"}
 boxplot(extra ~ group, data = sleep)
 ```
 ]
 ---
+
 layout: false
 # ggplot2
 [ggplot2 tutorial](https://ggplot2.tidyverse.org):
