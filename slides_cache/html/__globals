@@ -1,0 +1,15 @@
+unnamed-chunk-1	~	boxplot	sleep
+unnamed-chunk-2	install.packages
+unnamed-chunk-3	install.packages
+unnamed-chunk-4	!	::	if	install.packages	require
+unnamed-chunk-5	install.packages
+unnamed-chunk-6	install.packages
+unnamed-chunk-7	~	c	cars	coef	grep	lm	summary
+cars	abline	c	cars	fit	par	plot
+unnamed-chunk-8	::	head	iris
+unnamed-chunk-9	%>%	addTiles	leaflet	library	setView
+unnamed-chunk-10	::	head	iris	list
+unnamed-chunk-11	if	message
+unnamed-chunk-12	aes	disp	geom_point	geom_smooth	ggplot	library	mpg	mtcars
+unnamed-chunk-13	head	iris
+unnamed-chunk-14	:::	names
