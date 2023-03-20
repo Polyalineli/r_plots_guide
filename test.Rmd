@@ -6,6 +6,7 @@ institute: "RStudio, PBC"
 date: "2016/12/12 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
+    css: ["default", "metropolis-fonts", "css/custom.scss"]
     lib_dir: libs
     nature:
       ratio: 16:9
@@ -43,8 +44,8 @@ class: inverse, center, middle
 --
 <br>Чтобы посмотреть описание датасета вобьем в консоль
 
-```r
-??mtcars
+```{r, echo=TRUE, tidy=FALSE, eval=FALSE}
+?mtcars
 ```
 --
 A data frame with 32 observations on 11 (numeric) variables.
@@ -61,25 +62,98 @@ A data frame with 32 observations on 11 (numeric) variables.
 <br>[,11]	carb	Number of carburetors
 ---
 ```{r, result='asis', echo=FALSE}
-#kable(DT::datatable(mtcars))
-#kable(head(mtcars), format = "pipe")
 DT::datatable(
   mtcars,
-  fillContainer = FALSE, options = list(pageLength = 8)
+  fillContainer = FALSE, options = list(pageLength = 7, pageLength=9)
 )
 ```
 ---
-
-# Histograms
-
-.pull-left[
-```r
-hist(mtcars$wt)
+# mtcars
+.left-column[
+Summary statistics
+```{r, eval=FALSE, echo=TRUE}
+summary(mtcars)
+```
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+]
+.right-column[
+```{r, echo=FALSE, tidy=FALSE}
+summary(mtcars)
 ```
 ]
+---
+# Scatterplots 1
+.pull-left[
+```r
+plot(mtcars$mpg)
+```
+mpg - расход топлива
+**index** - порядок значений колонки mpg в таблице
 
+]
 .pull-right[
-**Good for:** быстро посмотреть на распределение своих данных
+```{r, echo=FALSE, tidy=FALSE}
+plot(mtcars$mpg)
+```
+]
+---
+# Scatterplots 2
+.pull-left[
+```r
+plot(x = mtcars$disp, y = mtcars$mpg)
+```
+равнозначные обозначения
+```r
+plot(mtcars$disp ~ mtcars$mpg)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+#нарисуем зависимость displacement от mpg
+plot(x = mtcars$disp, y = mtcars$mpg)
+```
+mpg - расход топлива (Miles/(US) gallon)
+<br>нарисуем зависимость displacement от mpg
+]
+---
+# Scatterplots
+.pull-left[
+```r
+plot(mtcars$wt,
+*    type="b")
+```
+аргумент **type =.** 
+<br>type = "p", default
+<br>just lines (type = "l") 
+<br>both points and lines connected (type = "b")
+<br>both points and lines with the lines running through the points (type = "o")  
+<br>empty points joined by lines (type = "c")
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+#нарисуем вес
+plot(mtcars$wt, type = "b")
+```
+]
+---
+
+# Histograms
+.pull-left[
+```{r, eval=FALSE}
+hist(mtcars$cyl)
+```
+По оси **х** - частота или количество машин с конкретным количеством цилиндров (**cyl**)
+]
+.pull-right[
+Позволяет быстро посмотреть на распределение своих данных
 ```{r, echo=FALSE, tidy=FALSE}
 hist(mtcars$wt)
 ```
@@ -102,13 +176,16 @@ hist(mtcars$wt,
 ]
 ---
 # Histograms
-The colour scheme rainbow automatically applies a gradient from red to green.
 .pull-left[
 ```r
 hist(mtcars$wt, 
      main = "Title", ylab="y", xlab="x",
 *    col = rainbow(25), 
      border="blue")
+```
+rainbow() автоматически применяет градиент от красного к зеленому
+```{r, eval=FALSE, echo=TRUE}
+ rainbow(5)
 ```
 ]
 .pull-right[
@@ -144,7 +221,7 @@ hist(mtcars$wt,
 .pull-left[
 base r pallets
 ```{r, tidy=FALSE}
-hcl.pals()
+head(hcl.pals())
 ```
 пример использования
 ```r
@@ -179,10 +256,11 @@ hist(mtcars$wt,
      border="blue",
 *    freq = FALSE)
 ```
-]
-.pull-right[
 По умолчанию по оси **у** отложена частота (frequency)
 <br>Если выставить freq = FALSE значение на оси **у** изменится на пллотность (density)
+]
+.pull-right[
+
 ```{r, echo=FALSE, tidy=FALSE}
 hist(mtcars$wt, main = "Title", freq = FALSE, ylab="y", xlab="x",
      col = terrain.colors(12))
@@ -209,58 +287,6 @@ lines(density(mtcars$wt))
 ]
 ---
 
-# Scatterplots
-.pull-left[
-```r
-plot(mtcars$mpg)
-```
-]
-.pull-right[
-```{r, echo=FALSE, tidy=FALSE}
-plot(mtcars$mpg)
-```
-]
----
-# Scatterplots
-.pull-left[
-```r
-plot(x = mtcars$disp, y = mtcars$mpg)
-```
---
-```r
-plot(mtcars$disp ~ mtcars$mpg)
-```
-]
-.pull-right[
-mpg - расход топлива (Miles/(US) gallon)
-displacement
-нарисуем зависимость displacement от mpg
-```{r, echo=FALSE, tidy=FALSE}
-#нарисуем зависимость displacement от mpg
-plot(x = mtcars$disp, y = mtcars$mpg)
-```
-]
----
-# Scatterplots
-.pull-left[
-```r
-plot(x = mtcars$disp, y = mtcars$mpg,
-*    type="b")
-```
-аргумент **type =.** 
-<br>type = "p", default
-<br>just lines (type = "l") 
-<br>both points and lines connected (type = "b")
-<br>both points and lines with the lines running through the points (type = "o")  
-<br>empty points joined by lines (type = "c")
-]
-.pull-right[
-```{r, echo=FALSE, tidy=FALSE}
-#нарисуем зависимость displacement от mpg
-plot(mtcars$wt, mtcars$disp, type = "b")
-```
-]
----
 
 # Boxplot
 .pull-left[
@@ -292,7 +318,7 @@ boxplot(mtcars$mpg ~ mtcars$cyl, main = "Title",col="lightblue")
 ]
 ---
 
-# Другие типы плотов доступных в base r
+# Другие типы плотов в base r
 .pull-left[
 ```r
 par(mfrow=c(3, 1))
@@ -339,8 +365,12 @@ qqline(mtcars$mpg, col = "steelblue", lwd = 2)
 
 class: inverse, center, middle
 
+
 # ggplot2!!
 ---
+
+
+
 # ggplot2
 <br>[ggplot2 tutorial](https://ggplot2.tidyverse.org)
 Установка библиотеки:
@@ -348,27 +378,69 @@ class: inverse, center, middle
 install.packages("ggplot2")
 ```
 ---
+# grammar of graphics
+Структура графиков 
+<br>**ggplot()** - основа
+<br>**aes() mappings** - ингридиенты (переменные)
+<br>**geom_()** - слои
+<br>**theme()** - украшение
+```{r eval=FALSE, tidy=FALSE}
+```
+---
 # wc3_units
 ```{r, result='asis', echo=FALSE}
-#kable(DT::datatable(mtcars))
-#kable(head(mtcars), format = "pipe")
 DT::datatable(
   wc3_units,
-  fillContainer = FALSE, options = list(pageLength = 8)
+  fillContainer = FALSE, options = list(pageLength = 8,
+  columnDefs = list(list(className = 'dt-center', targets = 5))
+  )
 )
 ```
 ---
-# ggplot
+# ggplot 1
 .pull-left[
 ### ggplot()
 ```r
-*ggplot(data = wc3_units, 
-       aes(x = race, y = hp)) +
-  geom_point()
+*ggplot(data = wc3_units)
 ```
+WarCraft3 dataset
 ]
 .pull-right[
 ggplot() функции подается датафрейм
+```{r, echo=FALSE, tidy=FALSE}
+ggplot(data = wc3_units)
+```
+]
+---
+# ggplot 2
+.pull-left[
+### ggplot()
+```r
+ggplot(data = wc3_units, 
+*       aes(x = race, y = hp))
+```
+aes = aesthetics
+]
+.pull-right[
+
+```{r, echo=FALSE, tidy=FALSE}
+ggplot(data = wc3_units, 
+       aes(x = race, y = hp))
+```
+]
+---
+# ggplot 3
+.pull-left[
+### ggplot()
+```r
+ggplot(data = wc3_units, 
+       aes(x = race, y = hp)) +
+*  geom_point()
+```
+geom = geometry
+]
+.pull-right[
+
 ```{r, echo=FALSE, tidy=FALSE}
 ggplot(data = wc3_units, 
        aes(x = race, y = hp)) +
@@ -376,7 +448,7 @@ ggplot(data = wc3_units,
 ```
 ]
 ---
-# ggplot aesthetics
+# ggplot aesthetics 1
 .pull-left[
 ### aes()
 ```r
@@ -393,19 +465,20 @@ ggplot(data = wc3_units,
 ```
 ]
 ---
+# ggplot aesthetics 2 параметры
 
-# ggplot aesthetics
+параметры  aes 
+---
+# ggplot aesthetics 3
 .pull-left[
 ### aes()
 ```r
 wc3_units %>% 
-  ggplot(aes(race, hp, color = armor_type)) +
-  geom_point(aes(shape = air_attack), size = 4, alpha = 0.5)
+*  ggplot(aes(race, hp, color = armor_type)) +
+  geom_point()
 ```
-
-
 ```r
-??aes
+?aes
 ```
 ]
 .pull-right[
@@ -416,18 +489,51 @@ wc3_units %>%
 ```
 ]
 ---
+# geom aesthetics
+geom_point() understands the following aesthetics (required aesthetics are in bold):
+.column-left[
+ - **x**
+ - **y**
+ - alpha
+ - colour
+ - fill
+ - group
+ - shape
+ - size
+ - stroke
+]
+.column-right[
+![]("img/Screenshot 2023-03-20 223431.png")
+]
+---
+# ggplot aesthetics 4
 .pull-left[
 ### aes()
 ```r
 wc3_units %>% 
   ggplot(aes(race, hp, color = armor_type)) +
+*  geom_point(aes(shape = air_attack), 
+*   size = 4, alpha = 0.5)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp, color = armor_type)) +
   geom_point(aes(shape = air_attack), size = 4, alpha = 0.5)
 ```
-
-
+]
+---
+# ggplot aesthetics 5
+.pull-left[
+### aes()
 ```r
-??aes
+wc3_units %>% 
+  ggplot(aes(race, hp, color = armor_type)) +
+*  geom_point(aes(shape = air_attack, 
+*  size = armor, alpha = sight))
 ```
+
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
@@ -436,6 +542,10 @@ wc3_units %>%
   geom_point(aes(shape = air_attack, size = armor, alpha = sight))
 ```
 ]
+---
+# Типы геометрий
+
+
 ---
 # ggplot geoms
 .pull-left[
@@ -461,6 +571,7 @@ ggplot(data = wc3_units,
  - **stat_summarise()** внутри ggplot 
  - подготовка данных при помощи **dplyr** (group_by(), summarise(), pivot_longer()) 
 <br>Примеры будут по ходу лекции
+
 ---
 # ggplot geoms
 .pull-left[
@@ -490,7 +601,7 @@ ggplot(data = wc3_units,
 ]
 ---
 Чтобы увидеть все доступные типы геометрий с описанием введите в консоли:
-```{r, echo=FALSE, tidy=FALSE}
+```{r, echo=TRUE, tidy=FALSE, eval=FALSE}
 ??geom_
 ```
 Или начните вводить **geom_** и нажмите **Tab**
@@ -647,6 +758,7 @@ wc3_units %>%
 .pull-left[
 ### geom_text()
 ```r
+plt <- 
 wc3_units %>% 
   ggplot(aes(race, hp)) +
   stat_summary(geom = "bar", fun="mean")+
@@ -666,5 +778,31 @@ wc3_units %>%
 ```
 Важно чтобы seed указанный для geom_point соответствовал значению seed у geom_text
 ]
-
+---
+# Надстройки 4
+на основе этого кода потренируемся создавать сложные графики
+.pull-left[
+### ggtitle()
+```r
+plt + 
+*  ggtitle("Title") +
+*  xlab("x") +
+*  ylab("y") +
+*  theme_bw()
+```
+сохраним в переменную plt
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp)) +
+  stat_summary(geom = "bar", fun="mean")+
+  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
+  ggtitle("Title") +
+  xlab("x")+
+  ylab("y")+ theme_bw()
+```
+]
 ---
