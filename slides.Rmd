@@ -7,7 +7,7 @@ output:
   xaringan::moon_reader:
     yolo: FALSE
     lib_dir: libs
-    css: ["default", "metropolis", "metropolis-fonts"]
+    css: ["default", "metropolis", "metropolis-fonts", "css/custom.scss"]
     nature:
       ratio: 16:9
       highlightStyle: github
