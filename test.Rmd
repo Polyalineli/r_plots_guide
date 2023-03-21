@@ -1,9 +1,8 @@
 ---
-title: "Presentation Ninja"
-subtitle: "⚔<br/>with xaringan"
-author: "Yihui Xie"
-institute: "RStudio, PBC"
-date: "2016/12/12 (updated: `r Sys.Date()`)"
+title: "Визуализация данных в R"
+subtitle: "base r, ggplot2, plotly etc.."
+author: "Полина и Лена"
+date: "2023/03/23 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis-fonts", "css/custom.scss"]
@@ -23,6 +22,8 @@ library(tidyverse)
 library(janitor)
 library(ggplot2)
 library(plotly)
+library(ComplexHeatmap)
+
 wc3_units <- read_tsv('https://raw.githubusercontent.com/ubogoeva/tidyverse_tutorial/master/data/wc3_heroes.txt',
                       col_names = TRUE, 
                       na = '-', 
@@ -42,10 +43,10 @@ class: inverse, center, middle
 ---
 ### Важность визуализации
 .pull-left[
-<img src="img/dino.jfif">
+<img src="img/ex.jfif">
 ]
 .pull-right[
-<img src="img/ex.jfif">
+<img src="img/dino.jfif">
 ]
 ---
 ### Какие можно вспомнить виды графиков?
@@ -146,7 +147,7 @@ summary(mtcars)
 ```r
 plot(mtcars$mpg)
 ```
-<br>На диаграмме рассеяния каждому наблюдению (или элементарной единице набора данных) соответствует точка, координаты которой равны значениям двух каких-то параметров этого наблюдения.
+<br>На диаграмме рассеяния каждому наблюдению соответствует точка, координаты которой равны значениям двух каких-то параметров этого наблюдения.
 <br>
 <br>mpg - расход топлива
 <br>**index** - порядок значений колонки mpg в таблице
@@ -257,7 +258,6 @@ hist(mtcars$wt,
 ]
 ---
 # Histograms
-Можно поэкспериментировать с числом, которое подается функции **terrain.colors()**
 .pull-left[
 ```r
 hist(mtcars$wt, 
@@ -265,6 +265,7 @@ hist(mtcars$wt,
 *    col = terrain.colors(12), 
      border="blue")
 ```
+Можно поэкспериментировать с числом, которое подается функции **terrain.colors()**
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -317,6 +318,7 @@ hist(mtcars$wt,
 ```
 По умолчанию по оси **у** отложена частота (frequency)
 <br>Если выставить freq = FALSE значение на оси **у** изменится на пллотность (density)
+<br>Данные разбиты на **bins**, каждый бин - интервал данных.
 ]
 .pull-right[
 
@@ -354,7 +356,7 @@ boxplot(mtcars$mpg, ylab = "y")
 ```
 график, использующийся в описательной статистике, компактно изображающий одномерное распределение вероятностей.
 <br>
-Такой вид диаграммы в удобной форме показывает медиану (или, если нужно, среднее), нижний и верхний квартили, минимальное и максимальное значение выборки и выбросы.
+<br>Такой вид диаграммы в удобной форме показывает **медиану** (или, если нужно, среднее), нижний и верхний **квартили**, **минимальное** и **максимальное** значение выборки и **выбросы**.
 
 ]
 .pull-right[
@@ -378,9 +380,8 @@ boxplot(mtcars$mpg ~ mtcars$cyl, main = "Title",col="lightblue")
 ```
 ]
 ---
-
-### Другие типы плотов в base r
 .pull-left[
+### Другие типы плотов в base r
 ```r
 par(mfrow=c(3, 1))
 ### stripchart()
@@ -400,6 +401,7 @@ main = "Первые 6 наблюдений расхода топлива",
 qqnorm(mtcars$mpg, pch = 1, frame = FALSE)
 qqline(mtcars$mpg, col = "steelblue", lwd = 2)
 ```
+Для дальнейшей кастомизации: [CheatSheet](https://r-graph-gallery.com/6-graph-parameters-reminder.html)
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -420,7 +422,6 @@ barplot(mtcars$mpg[1:6], main = "Первые 6 наблюдений расхо�
 qqnorm(mtcars$mpg, pch = 1, frame = FALSE)
 qqline(mtcars$mpg, col = "steelblue", lwd = 2)
 ```
-Для дальнейшей кастомизации: [CheatSheet](https://r-graph-gallery.com/6-graph-parameters-reminder.html)
 ]
 ---
 
@@ -428,9 +429,11 @@ class: inverse, center, middle
 
 # ggplot2!!
 ---
-### Grammar of graphics
 .pull-left[
-Подход к построению графиков в ggplot2 принципиально отличается от обычных типов графиков. Набор правил для построения графиков, а не конкретные виды графиков. Опирается на книгу граммар оф графикс
+### Grammar of graphics
+<br>
+<br>
+<br>Подход к построению графиков в ggplot2 принципиально отличается от обычных типов графиков. Набор правил для построения графиков, а не конкретные виды графиков. Опирается на книгу граммар оф графикс
 ]
 .pull-right[
 <img src="img/gg.jfif">
@@ -438,7 +441,8 @@ class: inverse, center, middle
 ---
 class: fullscreen, top, center
 background-image: url("img/ggp.jfif")
-.bottom[https://twitter.com/tanya_shapiro/status/1576935152575340544]
+
+.right[https://twitter.com/tanya_shapiro/status/1576935152575340544]
 ---
 # ggplot2
 <br>[ggplot2 tutorial](https://ggplot2.tidyverse.org)
@@ -446,13 +450,14 @@ background-image: url("img/ggp.jfif")
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("ggplot2")
 ```
+ggplot2 входит в кор тайдиверс, так что если вы уже установили tidyverse отдельно инсталлировать ggplot2 не надо
 ---
-
 # wc3_units
 ```{r, result='asis', echo=FALSE}
 DT::datatable(
   wc3_units,
-  fillContainer = FALSE, options = list(pageLength = 8,
+  #fillContainer = TRUE, 
+  options = list(pageLength = 6,
   columnDefs = list(list(className = 'dt-center', targets = 5))
   )
 )
@@ -527,9 +532,8 @@ ggplot(data = wc3_units,
 ```
 ]
 ---
-# ggplot aesthetics 2 параметры
-
-параметры  aes 
+# ggplot aesthetics (параметры)
+<img src="img/aes.png">
 
 ---
 .pull-left[
@@ -537,7 +541,8 @@ ggplot(data = wc3_units,
 ```r
 wc3_units %>% 
 *  ggplot(aes(race, hp, color = armor_type)) +
-  geom_point()
+  geom_point(aes(shape = air_attack), 
+  size = 4, alpha = 0.5)
 ```
 ```r
 ?aes
@@ -551,8 +556,8 @@ wc3_units %>%
 ```
 ]
 ---
-### geom aesthetics
 .pull-left[
+### geom aesthetics
 geom_point() understands the following aesthetics (required aesthetics are in bold):
  - **x**
  - **y**
@@ -577,6 +582,19 @@ wc3_units %>%
 *  geom_point(aes(shape = air_attack), 
 *   size = 5, alpha = 0.5)
 ```
+```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
+shapes <- data.frame(
+  shape = c(0:19, 22, 21, 24, 23, 20),
+  x = 0:24 %/% 5,
+  y = -(0:24 %% 5)
+)
+ggplot(shapes, aes(x, y)) + 
+  geom_point(aes(shape = shape), size = 5, fill = "red") +
+  geom_text(aes(label = shape), hjust = 0, nudge_x = 0.15) +
+  scale_shape_identity() +
+  expand_limits(x = 4.1) +
+  theme_void()
+```
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
@@ -594,7 +612,7 @@ wc3_units %>%
 *  geom_point(aes(shape = air_attack, 
 *  size = armor, alpha = sight))
 ```
- - появились в легенде
+ - **shape**, **size** и **alpha** появились в легенде
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
@@ -605,7 +623,25 @@ wc3_units %>%
 ]
 ---
 # Типы геометрий
+Чтобы увидеть все доступные типы геометрий с описанием введите в консоли:
+```{r, echo=TRUE, tidy=FALSE, eval=FALSE}
+??geom_
+```
+Или начните вводить **geom_** и нажмите **Tab**
 ---
+<img src="img/geoms.png">
+---
+<br>Перед тем как начать подробно рассматривать геометрии
+<br>Для построения графиков нам нужно будет модифицировать данные
+<br>Мы рассмотрим два способа:
+ - **stat_summarise()** внутри ggplot 
+ - подготовка данных при помощи **dplyr** (group_by(), summarise(), pivot_longer()) 
+<br>
+<br>
+<br>Примеры будут по ходу лекции
+
+---
+
 # ggplot geoms
 .pull-left[
 ### geom_()
@@ -624,15 +660,7 @@ ggplot(data = wc3_units,
 ]
 
 ---
-<br>Перед тем как начать подробно рассматривать геометрии
-<br>Для построения графиков нам нужно будет модифицировать данные
-<br>Мы рассмотрим два способа:
- - **stat_summarise()** внутри ggplot 
- - подготовка данных при помощи **dplyr** (group_by(), summarise(), pivot_longer()) 
-<br>
-<br>
-<br>Примеры будут по ходу лекции
----
+
 # ggplot geoms
 .pull-left[
 ### geom_point()
@@ -660,12 +688,6 @@ ggplot(data = wc3_units,
   <br>)
 ]
 ---
-Чтобы увидеть все доступные типы геометрий с описанием введите в консоли:
-```{r, echo=TRUE, tidy=FALSE, eval=FALSE}
-??geom_
-```
-Или начните вводить **geom_** и нажмите **Tab**
----
 .pull-left[
 ### geom_histogram()
 ```r
@@ -682,6 +704,90 @@ wc3_units %>%
 ```
 ]
 ---
+.pull-left[
+### geom_histogram() 
+### bins
+```r
+ggplot(data = wc3_units,
+    ggplot(aes(hp)) +
+*  geom_histogram(bins = 5)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(hp)) +
+  geom_histogram(bins = 5)
+```
+]
+---
+.pull-left[
+### geom_histogram() 
+### binwidth
+```r
+ggplot(data = wc3_units,
+    ggplot(aes(hp)) +
+*  geom_histogram(binwidth  = 20)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(hp)) +
+  geom_histogram(binwidth = 20)
+```
+]
+---
+.pull-left[
+### geom_histogram()
+```r
+ggplot(data = wc3_units,
+    ggplot(aes(hp)) +
+  geom_histogram(binwidth  = 40,
+* colour = 4, fill = "white")
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(hp)) +
+  geom_histogram(binwidth = 40,colour = 4, fill = "white")
+```
+]
+---
+.pull-left[
+### geom_boxplot()
+```r
+ggplot(data = wc3_units,
+    ggplot(aes(race, hp)) +
+*  geom_boxplot()
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(race,hp)) +
+  geom_boxplot()
+```
+]
+---
+.pull-left[
+### geom_violin()
+```r
+ggplot(data = wc3_units,
+    ggplot(aes(race, hp)) +
+*  geom_violin()
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(race,hp)) +
+  geom_violin()
+```
+]
+---
+
 .pull-left[
 ### geom_bar()
 ```r
@@ -767,8 +873,9 @@ wc3_units %>%
 дорисуем усы со стандартной ошибкой среднего
 ]
 ---
-### Надстройки 1
+
 .pull-left[
+### Надстройки
 ```r
 wc3_units %>% 
   ggplot(aes(race, hp)) +
@@ -777,7 +884,9 @@ wc3_units %>%
   fun.data="mean_se", width = 0.2)+
 *  geom_point()
 ```
-на основе этого кода потренируемся создавать сложные графики
+<br>
+<br>на основе этого кода потренируемся создавать сложные графики
+<br>На одном плоте можно рисовать несколько геометрий
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -787,7 +896,6 @@ wc3_units %>%
   stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
   geom_point()
 ```
-На одном плоте можно рисовать несколько геометрий
 ]
 ---
 .pull-left[
@@ -840,13 +948,13 @@ wc3_units %>%
 ]
 ---
 .pull-left[
-### ggtitle()
+### theme_()
 ```r
 plt + 
 *  ggtitle("Title") +
 *  xlab("x") +
 *  ylab("y") +
-*  theme_bw()
+*  theme_dark()
 ```
 сохраним в переменную plt
 ```{r, echo=TRUE, tidy=FALSE}
@@ -864,18 +972,20 @@ wc3_units %>%
   geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_bw()
+  ylab("y")+ theme_dark()
 ```
 ]
 ---
-### theme_()
+
 .pull-left[
+### theme()
 ```r
 plt + 
-*  ggtitle("Title") +
-*  xlab("x") +
-*  ylab("y") +
-*  theme_dark()
+  ggtitle("Title") +
+  xlab("x") +
+  ylab("y") +
+*  theme(panel.border = element_rect(linetype = "dashed", fill = NA))
+
 ```
 ]
 .pull-right[
@@ -888,18 +998,103 @@ wc3_units %>%
   geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark()
+  ylab("y")+ 
+  theme(panel.border = element_rect(linetype = "dashed", fill = NA))
+
+  
 ```
 ]
 ---
-### facet_wrap()
 .pull-left[
+### theme()
 ```r
 plt + 
   ggtitle("Title") +
   xlab("x") +
   ylab("y") +
-  theme_dark() + 
+*  theme(axis.text = element_text(colour = "blue"))
+
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp)) +
+  stat_summary(geom = "bar", fun="mean")+
+  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
+  ggtitle("Title") +
+  xlab("x")+
+  ylab("y")+ 
+  theme(axis.text = element_text(colour = "blue"))
+
+  
+```
+]
+---
+
+.pull-left[
+### theme()
+```r
+plt + 
+  ggtitle("Title") +
+  xlab("x") +
+  ylab("y") +
+*  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp)) +
+  stat_summary(geom = "bar", fun="mean")+
+  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
+  ggtitle("Title") +
+  xlab("x")+
+  ylab("y")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  
+```
+]
+---
+
+
+.pull-left[
+### scales
+```r
+plt + 
+  scale_y_continuous(limits = c(0,600))
+
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp)) +
+  stat_summary(geom = "bar", fun="mean")+
+  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
+  ggtitle("Title") +
+  xlab("x")+
+  ylab("y")+ 
+  scale_y_continuous(limits = c(0,600)) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+]
+---
+.pull-left[
+### facet_wrap()
+```r
+plt + 
+  ggtitle("Title") +
+  xlab("x") +
+  ylab("y") +
+  theme_bw() + 
 *  facet_wrap(~armor_type)
 ```
 ]
@@ -912,19 +1107,20 @@ wc3_units %>%
   geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark() + 
+  ylab("y")+ theme_bw() + 
   facet_wrap(~armor_type)
 ```
 ]
 ---
-### factor levels
+
 .pull-left[
+### fsacet_wrap()
 ```r
 plt + 
   ggtitle("Title") +
   xlab("x") +
   ylab("y") +
-  theme_dark() + 
+  theme_bw() + 
   facet_wrap(~armor_type, 
 * scales = "free")
 ```
@@ -938,25 +1134,29 @@ wc3_units %>%
   geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark() + 
+  ylab("y")+ theme_bw() + 
   facet_wrap(~armor_type, scales = "free")
 ```
 ]
 ---
-### factor levels
+
 .pull-left[
+### factor levels
 ```r
 wc3_units %>% 
 *  mutate(armor_type = 
 *           factor(armor_type, 
-*                  levels=c("Unarmored", "Light", "Medium", "Heavy", "Fort", "Invulnerable"))) %>%
+*                  levels=c("Unarmored", "Light", "Medium",
+* "Heavy", "Fort", "Invulnerable"))) %>%
   ggplot(aes(race, hp)) +
   stat_summary(geom = "bar", fun="mean")+
-  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
-  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  stat_summary(geom = "errorbar", 
+  fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),
+  position = position_jitterdodge(seed=1))+
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark() + 
+  ylab("y")+ theme_bw() + 
   facet_wrap(~armor_type)
 ```
 ]
@@ -972,7 +1172,7 @@ wc3_units %>%
   geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark() + 
+  ylab("y")+ theme_bw() + 
   facet_wrap(~armor_type)
 ```
 ]
@@ -985,8 +1185,8 @@ install.packages("plotly")
 ```
 ---
 
-### ggplotly()
 .pull-left[
+### ggplotly()
 ```r
 ggplotly(plt)
 ```
@@ -1003,8 +1203,81 @@ plt <- wc3_units %>%
   geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
   ggtitle("Title") +
   xlab("x")+
-  ylab("y")+ theme_dark() + 
+  ylab("y")+ theme_bw() + 
   facet_wrap(~armor_type)
 ggplotly(plt)
 ```
 ]
+---
+.left-code[
+### ComplexHeatmap
+[ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/):
+
+```{r eval=FALSE, tidy=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ComplexHeatmap")
+```
+[Примеры](https://github.com/jokergoo/ComplexHeatmap)
+]
+.right-plot[
+<img src="img/ch.png">
+
+]
+---
+### ComplexHeatmap
+на вход подается матрица
+```r
+mat[1:8,1:8]
+```
+
+```{r, result='asis', echo=FALSE}
+set.seed(123)
+nr1 = 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3
+nc1 = 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3
+mat = cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1,   sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc1, mean = 0,   sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc1, mean = 0,   sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc2, mean = 0,   sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc2, mean = 1,   sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc2, mean = 0,   sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc3, mean = 1,   sd = 0.5), nr = nr3))
+   )
+mat = mat[sample(nr, nr), sample(nc, nc)] # random shuffle rows and columns
+rownames(mat) = paste0("row", seq_len(nr))
+colnames(mat) = paste0("col", seq_len(nc))
+knitr::kable((format(round(mat, 1), nsmall = 1)[1:8,1:8]), format = 'html')
+```
+
+---
+### ComplexHeatmap
+.pull-left[
+```r
+Heatmap(mat)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+set.seed(123)
+nr1 = 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3
+nc1 = 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3
+mat = cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1,   sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc1, mean = 0,   sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc1, mean = 0,   sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc2, mean = 0,   sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc2, mean = 1,   sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc2, mean = 0,   sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc3, mean = 1,   sd = 0.5), nr = nr3))
+   )
+mat = mat[sample(nr, nr), sample(nc, nc)] # random shuffle rows and columns
+rownames(mat) = paste0("row", seq_len(nr))
+colnames(mat) = paste0("col", seq_len(nc))
+Heatmap(mat)
+```
+]
+---
