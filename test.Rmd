@@ -116,7 +116,7 @@ A data frame with 32 observations on 11 (numeric) variables.
 ```{r, result='asis', echo=FALSE}
 DT::datatable(
   mtcars,
-  fillContainer = FALSE, options = list(pageLength = 7, pageLength=9)
+  fillContainer = FALSE, options = list(pageLength = 6, pageLength=9)
 )
 ```
 ---
@@ -433,7 +433,7 @@ class: inverse, center, middle
 ### Grammar of graphics
 <br>
 <br>
-<br>Подход к построению графиков в ggplot2 принципиально отличается от обычных типов графиков. Набор правил для построения графиков, а не конкретные виды графиков. Опирается на книгу граммар оф графикс
+<br>Подход к построению графиков в ggplot2 принципиально отличается от обычных пакетов визуализации (matplotlib, seaborn в питоне). Фишка ggplot2 состоит в применении языка грамматики графики - набора правил для построения графиков. Такой подход дает огромную гибкость и возможность создания и кастомизации практически любого графика. Пакет опирается на книгу The Grammar of Graphics (Leland Wilkinson).
 ]
 .pull-right[
 <img src="img/gg.jfif">
@@ -541,8 +541,7 @@ ggplot(data = wc3_units,
 ```r
 wc3_units %>% 
 *  ggplot(aes(race, hp, color = armor_type)) +
-  geom_point(aes(shape = air_attack), 
-  size = 4, alpha = 0.5)
+  geom_point()
 ```
 ```r
 ?aes
@@ -552,7 +551,7 @@ wc3_units %>%
 ```{r, echo=FALSE, tidy=FALSE, , warning=FALSE}
 wc3_units %>% 
   ggplot(aes(race, hp, color = armor_type)) +
-  geom_point(aes(shape = air_attack), size = 4, alpha = 0.5)
+  geom_point()
 ```
 ]
 ---
@@ -642,26 +641,6 @@ wc3_units %>%
 
 ---
 
-# ggplot geoms
-.pull-left[
-### geom_()
-```r
-ggplot(data = wc3_units, 
-       aes(x = race, y = hp)) +
-*  geom_point()
-```
-]
-.pull-right[
-```{r, echo=FALSE, tidy=FALSE}
-ggplot(data = wc3_units, 
-       aes(x = race, y = hp)) +
-  geom_point()
-```
-]
-
----
-
-# ggplot geoms
 .pull-left[
 ### geom_point()
 ```r
@@ -669,6 +648,19 @@ ggplot(data = wc3_units,
        aes(x = race, y = hp)) +
 *  geom_point()
 ```
+<br> **geom_point()** - отрисовывает переменные, поданные в аэстетики (aes), в виде точек. Получилась обычная диаграмма рассеяния!
+
+<br>geom_point(
+<br>  mapping = NULL,
+<br>  data = NULL,
+<br>  stat = "identity",
+<br>  position = "identity",
+<br>  ...,
+<br>  na.rm = FALSE,
+<br>  show.legend = NA,
+<br>  inherit.aes = TRUE
+<br>)
+
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -676,23 +668,95 @@ ggplot(data = wc3_units,
        aes(x = race, y = hp)) +
   geom_point()
 ```
-<br>geom_point(
-  <br>  mapping = NULL,
-  <br>  data = NULL,
-  <br>  stat = "identity",
-  <br>  position = "identity",
-  <br>  ...,
-  <br>  na.rm = FALSE,
-  <br>  show.legend = NA,
-  <br>  inherit.aes = TRUE
-  <br>)
+]
+
+---
+
+.pull-left[
+### geom_point()
+```r
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)
+```
+
+]
+---
+.pull-left[
+### geom_smooth()
+```r
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)+
+*  geom_smooth()
+```
+<br>Добавим регрессионную линию с помощью geom_smooth()
+<br>По умолчанию линия не прямая, пытается максимально приблизить точки.
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)+
+  geom_smooth()
+```
+
+]
+---
+.pull-left[
+### geom_smooth()
+```r
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)+
+*  geom_smooth(method = 'lm')
+```
+<br>Добавим регрессионную прямую с помощью geom_smooth(method = 'lm')
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+  geom_point(size = 4)+
+  geom_smooth(method = 'lm')
+```
+
+]
+---
+.pull-left[
+### geom_smooth()
+```r
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold, 
+*             color = race))+
+  geom_point(size = 4)+
+  geom_smooth(method = 'lm')
+```
+<br>Добавим race юнитов с помощью цвета color в aes()
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold, 
+             color = race))+
+  geom_point(size = 4)+
+  geom_smooth(method = 'lm')
+```
+
 ]
 ---
 .pull-left[
 ### geom_histogram()
 ```r
-ggplot(data = wc3_units,
-    ggplot(aes(hp)) +
+wc3_units %>% 
+  ggplot(aes(hp)) +
 *  geom_histogram()
 ```
 ]
@@ -708,8 +772,8 @@ wc3_units %>%
 ### geom_histogram() 
 ### bins
 ```r
-ggplot(data = wc3_units,
-    ggplot(aes(hp)) +
+wc3_units %>% 
+  ggplot(aes(hp)) +
 *  geom_histogram(bins = 5)
 ```
 ]
@@ -725,9 +789,9 @@ wc3_units %>%
 ### geom_histogram() 
 ### binwidth
 ```r
-ggplot(data = wc3_units,
-    ggplot(aes(hp)) +
-*  geom_histogram(binwidth  = 20)
+wc3_units %>% 
+  ggplot(aes(hp)) +
+*  geom_histogram(binwidth = 20)
 ```
 ]
 .pull-right[
@@ -741,10 +805,10 @@ wc3_units %>%
 .pull-left[
 ### geom_histogram()
 ```r
-ggplot(data = wc3_units,
-    ggplot(aes(hp)) +
-  geom_histogram(binwidth  = 40,
-* colour = 4, fill = "white")
+wc3_units %>% 
+  ggplot(aes(hp)) +
+  geom_histogram(binwidth = 40,
+*  colour = 4, fill = "white")
 ```
 ]
 .pull-right[
@@ -758,7 +822,7 @@ wc3_units %>%
 .pull-left[
 ### geom_boxplot()
 ```r
-ggplot(data = wc3_units,
+wc3_units %>%
     ggplot(aes(race, hp)) +
 *  geom_boxplot()
 ```
@@ -774,7 +838,7 @@ wc3_units %>%
 .pull-left[
 ### geom_violin()
 ```r
-ggplot(data = wc3_units,
+wc3_units %>%
     ggplot(aes(race, hp)) +
 *  geom_violin()
 ```
@@ -832,6 +896,34 @@ wc3_units %>%
   summarise(mean_hp=mean(hp)) %>%
   ggplot(aes(race, mean_hp)) +
   geom_bar(stat = "identity") 
+```
+]
+---
+
+.pull-left[
+### geom_bar()
+
+```r
+wc3_units %>% 
+  group_by(race) %>%
+  summarise(mean_hp=mean(hp)) %>%
+  ggplot(aes(race, mean_hp, 
+*  fill=mean_hp)) +
+  geom_bar(stat = "identity")  +
+* scale_fill_gradient2(low="blue", high="red", 
+* midpoint = 550)
+```
+<br>scale_fill_gradient позволяет выставить градиент
+
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+wc3_units %>% 
+  group_by(race) %>%
+  summarise(mean_hp=mean(hp)) %>%
+  ggplot(aes(race, mean_hp, fill=mean_hp)) +
+  geom_bar(stat = "identity")  +
+scale_fill_gradient2(low="blue", high="red", midpoint = 550)
 ```
 ]
 ---
@@ -932,7 +1024,8 @@ wc3_units %>%
   geom_point(aes(color=armor_type),
   position = position_jitterdodge(seed=1))+
 *  geom_text(aes(label = unit,color=armor_type), 
-*  position = position_jitterdodge(seed = 1), size = 3)
+*  position = position_jitterdodge(seed = 1), 
+* size = 3)
 ```
 ]
 .pull-right[
@@ -1041,7 +1134,8 @@ plt +
   ggtitle("Title") +
   xlab("x") +
   ylab("y") +
-*  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+*  theme(axis.text.x = element_text(angle = 90, 
+* vjust = 0.5, hjust=1))
 
 ```
 ]
@@ -1226,6 +1320,14 @@ BiocManager::install("ComplexHeatmap")
 
 ]
 ---
+### Диаграмма Венна
+[Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
+<img src="img/b.png">
+---
+### UpSetR
+[UpSetR tutorial](https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html)
+<img src="img/upset.png">
+---
 ### ComplexHeatmap
 на вход подается матрица
 ```r
@@ -1280,4 +1382,12 @@ colnames(mat) = paste0("col", seq_len(nc))
 Heatmap(mat)
 ```
 ]
+---
+
+
+<br>[Понятная презентация по ggplot2](https://pkg.garrickadenbuie.com/gentle-ggplot2/#41)
+<br>[gganimate](https://gganimate.com/) - анимированные ggplots
+<br>[ggforce](https://ggforce.data-imaginist.com/) - еще более красивые графики
+<br>[Data Imaginist](https://www.data-imaginist.com/) - блог по визуализации данных
+
 ---
