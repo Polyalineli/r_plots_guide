@@ -51,6 +51,8 @@ class: inverse, center, middle
 ---
 ### Какие можно вспомнить виды графиков?
 
+--
+
  - Диаграмма рассеяния (scatterplot)
  
 --
@@ -465,11 +467,6 @@ DT::datatable(
   columnDefs = list(list(className = 'dt-center', targets = 5))
   )
 )
-```
----
-# wc3_units 2
-```{r, result='asis', echo=FALSE}
-knitr::kable(head(wc3_units), format = 'html')
 ```
 ---
 .pull-left[
@@ -1042,7 +1039,9 @@ wc3_units %>%
   geom_point(aes(color=armor_type),
 * position = position_jitterdodge(seed=1))
 ```
-Для воспроизводимости положения точек мы указываем **seed** (для создания списка "рандомных" позиций)
+<br>Фиксация генератора случайных чисел:
+<br>Для воспроизводимости положения точек мы указываем **seed** (для создания списка "рандомных" позиций)
+
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -1466,3 +1465,10 @@ Heatmap(mat)
 <br>[Data Imaginist](https://www.data-imaginist.com/) - блог по визуализации данных
 
 ---
+.center[
+## Спасибо за внимание!
+<img src="img/cat.jpg">
+]
+.right[
+Если вам понравилось сканируйте QR-код ;)<img src="img/qr.png">
+]
