@@ -888,7 +888,44 @@ wc3_units %>%
 ```
 ]
 ---
-
+.pull-left[
+### geom_violin()
+```r
+wc3_units %>%
+    ggplot(aes(race, hp)) +
+  geom_violin()+
+*  geom_boxplot(width=0.1)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(race,hp)) +
+  geom_violin() +
+  geom_boxplot(width=0.1)
+```
+]
+---
+.pull-left[
+### geom_violin()
+```r
+wc3_units %>%
+    ggplot(aes(race, hp)) +
+  geom_violin()+
+*  geom_dotplot(binaxis='y', 
+* stackdir='center', dotsize=1)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, message = FALSE}
+wc3_units %>% 
+  ggplot(aes(race,hp)) +
+  geom_violin() +
+  geom_dotplot(binaxis='y', 
+               stackdir='center', dotsize=1)
+```
+]
+---
 .pull-left[
 ### geom_bar()
 ```r
@@ -961,6 +998,34 @@ wc3_units %>%
   ggplot(aes(race, mean_hp, fill=mean_hp)) +
   geom_bar(stat = "identity")  +
 scale_fill_gradient2(low="blue", high="red", midpoint = 550)
+```
+]
+---
+.pull-left[
+### geom_bar()
+
+```r
+* library(viridis)
+wc3_units %>% 
+  group_by(race) %>%
+  summarise(mean_hp=mean(hp)) %>%
+  ggplot(aes(race, mean_hp, 
+  fill=mean_hp)) +
+  geom_bar(stat = "identity")  +
+* scale_fill_viridis()
+```
+<br>scale_fill_gradient позволяет выставить градиент
+
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+library(viridis)
+wc3_units %>% 
+  group_by(race) %>%
+  summarise(mean_hp=mean(hp)) %>%
+  ggplot(aes(race, mean_hp, fill=mean_hp)) +
+  geom_bar(stat = "identity")  +
+scale_fill_viridis()
 ```
 ]
 ---
@@ -1375,6 +1440,28 @@ ggplotly(plt)
 ```
 ]
 ---
+.pull-left[
+### ggplotly()
+```r
+library(viridis)
+plt2 <- wc3_units %>%
+  ggplot(aes(damage, hp)) +
+  geom_point(aes(size=damage,color=dps)) +
+  scale_color_viridis()
+ggplotly(plt2)
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE}
+library(viridis)
+plt2 <- wc3_units %>%
+  ggplot(aes(damage, hp)) +
+  geom_point(aes(size=damage,color=dps)) +
+  scale_color_viridis()
+ggplotly(plt2)
+```
+]
+---
 ### Диаграмма Венна
 [Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
 <br><img src="img/b.png">
@@ -1464,10 +1551,11 @@ Heatmap(mat)
 <br>[Data Imaginist](https://www.data-imaginist.com/) - блог по визуализации данных
 
 ---
+class: inverse
 .center[
 ## Спасибо за внимание!
 <img src="img/cat.jpg">
 ]
 .right[
-Если вам понравилось сканируйте QR-код ;)<img src="img/qr.png">
+Если вам понравилось сканируйте QR-код ;)  <img src="img/qr.png">
 ]
