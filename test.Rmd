@@ -1340,7 +1340,6 @@ wc3_units %>%
 ---
 # ggplotly()
 <br>пакет для создания интерактивных графиков
-<br>[Туториал от Лены](https://t.me/stats_for_science/61)
 <br>[plotly](https://plotly.com/r/getting-started/):
 
 ```{r eval=FALSE, tidy=FALSE}
@@ -1382,7 +1381,7 @@ ggplotly(plt)
 ---
 ### UpSetR
 <br>[UpSetR tutorial](https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html)
-<br> 
+<br>[Туториал от Лены](https://t.me/stats_for_science/61)
 <br><img src="img/upset.png">
 ---
 .left-code[
