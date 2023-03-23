@@ -1445,7 +1445,7 @@ ggplotly(plt)
 ```r
 library(viridis)
 plt2 <- wc3_units %>%
-  ggplot(aes(damage, hp)) +
+  ggplot(aes(text=unit,damage, hp)) +
   geom_point(aes(size=damage,color=dps)) +
   scale_color_viridis()
 ggplotly(plt2)
@@ -1455,7 +1455,7 @@ ggplotly(plt2)
 ```{r, echo=FALSE, tidy=FALSE}
 library(viridis)
 plt2 <- wc3_units %>%
-  ggplot(aes(damage, hp)) +
+  ggplot(aes(text=unit,damage, hp)) +
   geom_point(aes(size=damage,color=dps)) +
   scale_color_viridis()
 ggplotly(plt2)
