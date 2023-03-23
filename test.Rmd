@@ -2,7 +2,7 @@
 title: "Визуализация данных в R"
 subtitle: "base r, ggplot2, plotly etc.."
 author: "Полина и Лена"
-date: "2023/03/23 (updated: `r Sys.Date()`)"
+date: "2023/03/20 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis-fonts", "css/custom.scss"]
@@ -122,7 +122,7 @@ DT::datatable(
 ---
 # mtcars
 .left-column[
-Чтобы посмотреть описание датасета наберем в консоли:
+Чтобы посмотреть описательные статистики датасета наберем в консоли:
 ```{r, eval=FALSE, echo=TRUE}
 summary(mtcars)
 ```
@@ -160,7 +160,7 @@ plot(mtcars$mpg)
 ```
 ]
 ---
-# Scatterplots 2
+# Scatterplots
 .pull-left[
 ```r
 plot(x = mtcars$disp, y = mtcars$mpg)
@@ -374,6 +374,7 @@ boxplot(mtcars$mpg ~ mtcars$cyl,
 *       main = "Title",
 *       col="lightblue")
 ```
+Дополнительная кастомизация
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -527,6 +528,7 @@ ggplot(data = wc3_units,
 *       aes(x = race, y = hp)) +
   geom_point()
 ```
+Вернемся к aes() и рассмотрим подробнее
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -561,7 +563,9 @@ wc3_units %>%
 ---
 .pull-left[
 ### geom aesthetics
-geom_point() understands the following aesthetics (required aesthetics are in bold):
+<br>aes() можно задавать как внутри ggplot(), так и внутри geoms
+<br>Например:
+<br>geom_point() understands the following aesthetics (required aesthetics are in bold):
  - **x**
  - **y**
  - alpha
@@ -667,7 +671,7 @@ ggplot(data = wc3_units,
 
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
 ggplot(data = wc3_units, 
        aes(x = gold, y = hp)) +
   geom_point()
@@ -683,6 +687,7 @@ wc3_units %>%
   ggplot(aes(x = damage, y = gold))+
   geom_point(size = 4)
 ```
+Построим зависимость damage от gold
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
@@ -744,6 +749,9 @@ wc3_units %>%
   geom_smooth(method = 'lm')
 ```
 <br>Добавим race юнитов с помощью цвета color в aes()
+
+<br>Обратите внимание, как прописываются aesthetics. В функции ggplot() применяются на всем графике, на всех geoms, поэтому geom_smooth() строит регрессию отдельно по каждой расе. 
+<br>Если бы мы хотели построить регрессию по всему датасету, то аэстетику цвета нужно было бы прописать отдельно в geom_point()
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
@@ -757,12 +765,35 @@ wc3_units %>%
 ]
 ---
 .pull-left[
+### geom_smooth()
+```r
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold))+
+*  geom_point(aes(color = race), 
+  size = 4)+
+  geom_smooth(method = 'lm')
+```
+<br>Если бы мы хотели построить регрессию по всему датасету, то аэстетику цвета нужно было бы прописать отдельно в geom_point()
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(x = damage, y = gold, 
+             ))+
+  geom_point(aes(color = race), size = 4)+
+  geom_smooth(method = 'lm')
+```
+
+]
+---
+.pull-left[
 ### geom_histogram()
 ```r
 wc3_units %>% 
   ggplot(aes(hp)) +
 *  geom_histogram()
 ```
+По умолчанию по оси у отложено количество наблюдений в диапазоне, определенном параметром bins или binwidth
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, message = FALSE}
@@ -780,6 +811,7 @@ wc3_units %>%
   ggplot(aes(hp)) +
 *  geom_histogram(bins = 5)
 ```
+bins определяет количество долей на которые будут разделены данные
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, message = FALSE}
@@ -797,6 +829,7 @@ wc3_units %>%
   ggplot(aes(hp)) +
 *  geom_histogram(binwidth = 20)
 ```
+binwidth определяет какого размера будут bins
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, message = FALSE}
@@ -830,6 +863,8 @@ wc3_units %>%
     ggplot(aes(race, hp)) +
 *  geom_boxplot()
 ```
+В описании к geom_boxplot() отмечено что подсчет статистик для него отличается от baser функции boxplot()
+<img src="img/bp.png">
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, message = FALSE}
@@ -846,6 +881,7 @@ wc3_units %>%
     ggplot(aes(race, hp)) +
 *  geom_violin()
 ```
+<img src="img/v.png">
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE, message = FALSE}
@@ -938,6 +974,7 @@ wc3_units %>%
   ggplot(aes(race, hp)) +
 *  stat_summary(geom = "bar", fun="mean")
 ```
+<img src="img/sumf.png">
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -1005,6 +1042,7 @@ wc3_units %>%
   geom_point(aes(color=armor_type),
 * position = position_jitterdodge(seed=1))
 ```
+Для воспроизводимости положения точек мы указываем **seed** (для создания списка "рандомных" позиций)
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -1031,6 +1069,7 @@ wc3_units %>%
 *  position = position_jitterdodge(seed = 1), 
 * size = 3)
 ```
+Чтобы позиции текста и точек совпали на графике необходимо чтобы **seed** указанный для geom_point() соответствовал значению **seed** у geom_text()
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -1041,7 +1080,7 @@ wc3_units %>%
   geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
   geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3)
 ```
-Важно чтобы seed указанный для geom_point соответствовал значению seed у geom_text
+
 ]
 ---
 .pull-left[
@@ -1185,6 +1224,31 @@ wc3_units %>%
 ```
 ]
 ---
+
+.pull-left[
+### scales
+```r
+plt + 
+*  scale_y_continuous(limits = c(0,1500), 
+*  breaks = seq(0, 1500, 300))
+
+```
+]
+.pull-right[
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+wc3_units %>% 
+  ggplot(aes(race, hp)) +
+  stat_summary(geom = "bar", fun="mean")+
+  stat_summary(geom = "errorbar", fun.data="mean_se", width = 0.2)+
+  geom_point(aes(color=armor_type),position = position_jitterdodge(seed=1))+
+  geom_text(aes(label = unit,color=armor_type), position = position_jitterdodge(seed = 1), size = 3) +
+  ggtitle("Title") +
+  xlab("x")+
+  ylab("y")+ 
+scale_y_continuous(limits = c(0,1500), breaks = seq(0, 1500, 300)) +  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+]
+---
 .pull-left[
 ### facet_wrap()
 ```r
@@ -1277,11 +1341,16 @@ wc3_units %>%
 ---
 # ggplotly()
 <br>пакет для создания интерактивных графиков
+<br>[Туториал от Лены](https://t.me/stats_for_science/61)
 <br>[plotly](https://plotly.com/r/getting-started/):
 
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("plotly")
 ```
+
+<br>**echarts4r** — один из основных конкурентов для plotly. Симпатичный, работает довольно плавно, синтаксис тоже пытается вписаться в логику tidyverse.
+<br>**leaflet** — основной (но не единственный!) пакет для работы с картами. Leaflet — это очень популярная библиотека JavaScript, используемая во многих веб-приложениях, а пакет leaflet - это довольно понятный интерфейс к ней с широкими возможностями.
+<br>**networkD3** — пакет для интерактивной визуализации сетей. Подходит для небольших сетей.
 ---
 
 .pull-left[
@@ -1309,7 +1378,7 @@ ggplotly(plt)
 ]
 ---
 ### Диаграмма Венна
-<br>[Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
+[Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
 <br><img src="img/b.png">
 ---
 ### UpSetR
@@ -1390,7 +1459,7 @@ Heatmap(mat)
 ]
 ---
 
-
+#  Куда двигаться дальше
 <br>[Понятная презентация по ggplot2](https://pkg.garrickadenbuie.com/gentle-ggplot2/)
 <br>[gganimate](https://gganimate.com/) - анимированные ggplots
 <br>[ggforce](https://ggforce.data-imaginist.com/) - еще более красивые графики
