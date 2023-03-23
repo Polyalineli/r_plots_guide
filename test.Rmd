@@ -79,7 +79,7 @@ class: inverse, center, middle
 
 --
 
- - Pie chart
+ - Pie chart (не рекомендуется)
 
 --
 
@@ -122,7 +122,7 @@ DT::datatable(
 ---
 # mtcars
 .left-column[
-Summary statistics
+Чтобы посмотреть описание датасета наберем в консоли:
 ```{r, eval=FALSE, echo=TRUE}
 summary(mtcars)
 ```
@@ -171,7 +171,7 @@ plot(mtcars$disp ~ mtcars$mpg)
 ```
 <br>
 <br>mpg - расход топлива (Miles/(US) gallon)
-<br>нарисуем зависимость displacement от mpg
+<br>нарисуем зависимость mpg от displacement  
 ]
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
@@ -305,6 +305,7 @@ hist(mtcars$wt,
 <br>terrain.colors(n, alpha, rev = FALSE)
 <br>topo.colors(n, alpha, rev = FALSE)
 <br>cm.colors(n, alpha, rev = FALSE)
+<br>[Rcolor.pdf](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
 ]
 ---
 # Histograms
@@ -433,7 +434,9 @@ class: inverse, center, middle
 ### Grammar of graphics
 <br>
 <br>
-<br>Подход к построению графиков в ggplot2 принципиально отличается от обычных пакетов визуализации (matplotlib, seaborn в питоне). Фишка ggplot2 состоит в применении языка грамматики графики - набора правил для построения графиков. Такой подход дает огромную гибкость и возможность создания и кастомизации практически любого графика. Пакет опирается на книгу The Grammar of Graphics (Leland Wilkinson).
+<br>Подход к построению графиков в `ggplot2` принципиально отличается от обычных пакетов визуализации (matplotlib, seaborn в питоне). 
+<br>Фишка `ggplot2` состоит в применении языка грамматики графики - набора правил для построения графиков. 
+<br>Такой подход дает огромную гибкость и возможность создания и кастомизации практически любого графика. Пакет опирается на книгу The Grammar of Graphics (Leland Wilkinson).
 ]
 .pull-right[
 <img src="img/gg.jfif">
@@ -450,7 +453,7 @@ background-image: url("img/ggp.jfif")
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("ggplot2")
 ```
-ggplot2 входит в кор тайдиверс, так что если вы уже установили tidyverse отдельно инсталлировать ggplot2 не надо
+`ggplot2` входит в core `tidyverse`, так что если вы уже установили `tidyverse` отдельно устанавливать `ggplot2` не надо
 ---
 # wc3_units
 ```{r, result='asis', echo=FALSE}
@@ -488,7 +491,8 @@ ggplot(data = wc3_units)
 ggplot(data = wc3_units, 
 *       aes(x = race, y = hp))
 ```
-aes = aesthetics
+<br>aes = aesthetics
+<br>aes() отражает, какие переменные и как мы собираемся использовать в графике. Здесь мы прописали, что по X будет race, по Y hp.
 ]
 .pull-right[
 
@@ -633,7 +637,7 @@ wc3_units %>%
 <br>Перед тем как начать подробно рассматривать геометрии
 <br>Для построения графиков нам нужно будет модифицировать данные
 <br>Мы рассмотрим два способа:
- - **stat_summarise()** внутри ggplot 
+ - **stat_summary()** внутри ggplot 
  - подготовка данных при помощи **dplyr** (group_by(), summarise(), pivot_longer()) 
 <br>
 <br>
@@ -645,7 +649,7 @@ wc3_units %>%
 ### geom_point()
 ```r
 ggplot(data = wc3_units, 
-       aes(x = race, y = hp)) +
+       aes(x = gold, y = hp)) +
 *  geom_point()
 ```
 <br> **geom_point()** - отрисовывает переменные, поданные в аэстетики (aes), в виде точек. Получилась обычная диаграмма рассеяния!
@@ -665,7 +669,7 @@ ggplot(data = wc3_units,
 .pull-right[
 ```{r, echo=FALSE, tidy=FALSE}
 ggplot(data = wc3_units, 
-       aes(x = race, y = hp)) +
+       aes(x = gold, y = hp)) +
   geom_point()
 ```
 ]
@@ -1208,7 +1212,7 @@ wc3_units %>%
 ---
 
 .pull-left[
-### fsacet_wrap()
+### facet_wrap()
 ```r
 plt + 
   ggtitle("Title") +
@@ -1271,8 +1275,9 @@ wc3_units %>%
 ```
 ]
 ---
-# plot_ly()
-[plotly](https://plotly.com/r/getting-started/):
+# ggplotly()
+<br>пакет для создания интерактивных графиков
+<br>[plotly](https://plotly.com/r/getting-started/):
 
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("plotly")
@@ -1303,6 +1308,15 @@ ggplotly(plt)
 ```
 ]
 ---
+### Диаграмма Венна
+<br>[Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
+<br><img src="img/b.png">
+---
+### UpSetR
+<br>[UpSetR tutorial](https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html)
+<br> 
+<br><img src="img/upset.png">
+---
 .left-code[
 ### ComplexHeatmap
 [ComplexHeatmap](https://jokergoo.github.io/ComplexHeatmap-reference/book/):
@@ -1319,14 +1333,6 @@ BiocManager::install("ComplexHeatmap")
 <img src="img/ch.png">
 
 ]
----
-### Диаграмма Венна
-[Диаграммы Венна в R](https://r-graph-gallery.com/14-venn-diagramm)
-<img src="img/b.png">
----
-### UpSetR
-[UpSetR tutorial](https://jokergoo.github.io/ComplexHeatmap-reference/book/upset-plot.html)
-<img src="img/upset.png">
 ---
 ### ComplexHeatmap
 на вход подается матрица
@@ -1385,7 +1391,7 @@ Heatmap(mat)
 ---
 
 
-<br>[Понятная презентация по ggplot2](https://pkg.garrickadenbuie.com/gentle-ggplot2/#41)
+<br>[Понятная презентация по ggplot2](https://pkg.garrickadenbuie.com/gentle-ggplot2/)
 <br>[gganimate](https://gganimate.com/) - анимированные ggplots
 <br>[ggforce](https://ggforce.data-imaginist.com/) - еще более красивые графики
 <br>[Data Imaginist](https://www.data-imaginist.com/) - блог по визуализации данных
