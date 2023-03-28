@@ -7,7 +7,7 @@
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
-    <link rel="stylesheet" href="libs/sassba0ff081957b45a8ae2dd25a1479c4b8/custom.min.css" type="text/css" />
+    <link rel="stylesheet" href="libs/sasseeebdfd746e56b62204e4f0fb9e6e545/custom.min.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -41,7 +41,7 @@ wc3_units &lt;- read_tsv('https://raw.githubusercontent.com/ubogoeva/tidyverse_t
                       name_repair = 'minimal') %&gt;% 
   janitor::clean_names()
 ```
-
+Не стесняйтесь обращаться к [лекции](https://polyalineli.github.io/r_plots_guide/rvisualisation.html#33), к **help** или к **гуглу** :)
 ---
 .pull-left[
 ### Задание 1
@@ -218,7 +218,7 @@ levels=c("Unarmored", "Light", "Medium",
 &lt;br&gt;Для этого
   - отфильтруем строки таблицы без пропущенных значений нужных нам колонок *(armor_type, unit, dps, hp, damage)*.Чтобы найти строки без пропущенных значений используйте функцию ***complete.cases()***.
   - сгруппируйте данные по ***armor_type***.
-  - просуммируйте данные в количество юнитов , среднее dps, средее hp и средний damage покаждому типу брони
+  - просуммируйте данные в количество юнитов , среднее dps, средее hp и средний damage по каждому типу брони
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -278,7 +278,7 @@ levels=c("Unarmored", "Light", "Medium",
 ---
 .pull-left[
 ### Задание 6
-&lt;br&gt;Теперь передайте полученную табличку в ***ggplot()** и допишите код для построения графика.
+&lt;br&gt;Теперь передайте полученную табличку в ***ggplot()*** и допишите код для построения графика.
 &lt;br&gt;Для установки градиента вам понадобится функция ***scale_color_gradient()***.
 &lt;br&gt;Тема которую использует `ClusterProfiler` есть среди готовых тем [`ggplot2`](https://ggplot2.tidyverse.org/reference/ggtheme.html).
 

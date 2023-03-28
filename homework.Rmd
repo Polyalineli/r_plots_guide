@@ -28,6 +28,17 @@ wc3_units <- read_tsv('https://raw.githubusercontent.com/ubogoeva/tidyverse_tuto
                       na = '-', 
                       name_repair = 'minimal') %>% 
   janitor::clean_names()
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo <- FALSE
+    options$out.height <- "99%"
+    options$fig.width <- 16
+    options$fig.height <- 8
+  }
+  options
+})
+
 ```
 
 Чтобы загрузить данные wc3_units:
@@ -40,17 +51,17 @@ wc3_units <- read_tsv('https://raw.githubusercontent.com/ubogoeva/tidyverse_tuto
                       name_repair = 'minimal') %>% 
   janitor::clean_names()
 ```
-
+Не стесняйтесь обращаться к [лекции](https://polyalineli.github.io/r_plots_guide/rvisualisation.html#33), к **help** или к **гуглу** :)
 ---
 .pull-left[
 ### Задание 1
 Используя `ggplot2` нарисуйте график плотности вероятности (***geom_density***) для юнита каждой рассы иметь определенное количество hp. Настройте прозрачность (***alpha***).
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, dpi=400}
 wc3_units %>%
   ggplot(aes(x=hp, fill=race)) +
-  geom_density(alpha=0.5)
+  geom_density(alpha=0.5)  + theme(text = element_text(size = 20))
 ```
 ]
 ---
@@ -60,10 +71,10 @@ wc3_units %>%
 <br>Какую геометрию нужно использовать?
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, dpi=400}
 wc3_units %>%
   ggplot(aes(sight, speed, color = race)) +
-  geom_point(size=4)
+  geom_point(size=4)+ theme(text = element_text(size = 20))
 ```
 ]
 ---
@@ -72,7 +83,7 @@ wc3_units %>%
 Для выполнения следующего задания сгруппируйте данные по колонкам ***armor_type*** и ***race***, и посчитайте количество юнитов представленных в каждой подгруппе.
 ]
 .pull-right[
-```{r, result='asis', echo=FALSE, warning=FALSE, message=FALSE}
+```{r, result='asis', echo=FALSE, warning=FALSE, message=FALSE, dpi=400}
 tmp<-wc3_units %>%
   group_by(armor_type, race) %>%
   summarise(n=n())
@@ -89,7 +100,7 @@ levels=c("Unarmored", "Light", "Medium",
 ```
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE, dpi=400}
 wc3_units %>%
   group_by(armor_type, race) %>%
   summarise(n=n()) %>%
@@ -98,7 +109,7 @@ wc3_units %>%
                   levels=c("Unarmored", "Light", "Medium",
                            "Heavy", "Fort", "Invulnerable"))) %>%
   ggplot(aes(x=armor_type, y=n, fill=race)) +
-  geom_bar(stat="identity")
+  geom_bar(stat="identity")+ theme(text = element_text(size = 20))
 ```
 ]
 ---
@@ -107,7 +118,7 @@ wc3_units %>%
 Модифицируйте полученный код используя параметр ***position*** внутри geom_bar(). Для того чтобы узнать какие значения он принимает на вход используйте ***help*** или **google** ;)
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE, dpi=400}
 wc3_units %>%
   group_by(armor_type, race) %>%
   summarise(n=n()) %>%
@@ -116,7 +127,7 @@ wc3_units %>%
                   levels=c("Unarmored", "Light", "Medium",
                            "Heavy", "Fort", "Invulnerable"))) %>%
   ggplot(aes(x=armor_type, y=n, fill=race)) +
-  geom_bar(stat="identity", position="dodge")
+  geom_bar(stat="identity", position="dodge")+ theme(text = element_text(size = 20))
 ```
 ]
 ---
@@ -126,7 +137,7 @@ wc3_units %>%
 <img src="img/ggplot2-line-type-line-type-1.png">
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE, dpi=400}
 wc3_units %>%
   group_by(armor_type, race) %>%
   summarise(n=n()) %>%
@@ -136,7 +147,7 @@ wc3_units %>%
                            "Heavy", "Fort", "Invulnerable"))) %>%
   ggplot(aes(x=armor_type, y=n, color=race)) +
   geom_point(shape=16, size =4) +
-  geom_line(aes(group=race), size=1.5, linetype = "dashed")
+  geom_line(aes(group=race), size=1.5, linetype = "dashed")+ theme(text = element_text(size = 20))
 ```
 ]
 ---
@@ -161,9 +172,9 @@ wc3_units %>%
 <br>Для этого
   - отфильтруем строки таблицы без пропущенных значений нужных нам колонок *(armor_type, unit, dps, hp, damage)*.Чтобы найти строки без пропущенных значений используйте функцию ***complete.cases()***.
   - сгруппируйте данные по ***armor_type***.
-  - просуммируйте данные в количество юнитов , среднее dps, средее hp и средний damage покаждому типу брони
+  - просуммируйте данные в количество юнитов , среднее dps, средее hp и средний damage по каждому типу брони
 
-```{r,result='asis', echo=FALSE, tidy=FALSE}
+```{r,result='asis', echo=FALSE, tidy=FALSE, dpi=400}
 tmp <- wc3_units %>%
    filter(complete.cases(armor_type, unit, dps, hp, damage)) %>%
   group_by(armor_type) %>%
@@ -179,13 +190,13 @@ knitr::kable(tmp, format = 'html')
 ---
 .pull-left[
 ### Задание 6
-<br>Теперь передайте полученную табличку в ***ggplot()** и допишите код для построения графика.
+<br>Теперь передайте полученную табличку в ***ggplot()*** и допишите код для построения графика.
 <br>Для установки градиента вам понадобится функция ***scale_color_gradient()***.
 <br>Тема которую использует `ClusterProfiler` есть среди готовых тем [`ggplot2`](https://ggplot2.tidyverse.org/reference/ggtheme.html).
 
 ]
 .pull-right[
-```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, tidy=FALSE, warning=FALSE, message=FALSE, dpi=400}
 wc3_units %>%
    filter(complete.cases(armor_type, unit,dps, hp, damage)) %>%
   group_by(armor_type) %>%
@@ -196,7 +207,7 @@ wc3_units %>%
   ggplot(aes(x=mean_dps, y= armor_type, color=mean_damage, size= mean_hp)) +
   geom_point() +
   scale_color_gradient(high="red",low="blue") +
-  theme_bw() + ggtitle("Just like ClusterProfiler")
+  theme_bw() + ggtitle("Just like ClusterProfiler")+ theme(text = element_text(size = 20))
 ```
 ]
 ---
