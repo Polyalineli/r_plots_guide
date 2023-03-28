@@ -162,8 +162,9 @@ wc3_units %>%
 <br>
 <br>
 <br>
-<img src="img/Dotplotcap-1.png">
-
+```{r,result='asis', echo=FALSE, tidy=FALSE, dpi=200}
+knitr::include_graphics("img/Dotplotcap-1.png", dpi = 200)
+```
 ]
 ---
 ### Задание 6
