@@ -1263,7 +1263,6 @@ wc3_units %>%
 ]
 ---
 
-
 .pull-left[
 ### scales
 ```r
